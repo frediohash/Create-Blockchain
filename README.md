@@ -16,7 +16,7 @@ Requirements:
 
 ## Description
 
-This is the simple blockchain using javascrpit ES6.
+This is the simple blockchain using javascript ES6.
 
 
 
