@@ -1,6 +1,6 @@
 # Create-Blockchain
 
-Create genesis block that will be called over blockhain.
+Create genesis block that will be called over Blockhain.
 
 ## Node.js (Install)
 
