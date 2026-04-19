@@ -1,0 +1,99 @@
+
+Hi everyone, my name is Kavier and in this video we're going to write a very tiny blockchain in JavaScript. Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. We'll call this blockchain Savcoin and let's get started.   
+[Music]   [Applause]   Okay, so here I've opened up an empty directory in Visual Studio Code.
+ And  let's start by creating a new JavaScript file uh to store all of our code. I'm going to call this main.js. 
+ And I'm going to start by defining what a block on our blockchain will look like. 
+ 
+ So I'm going to create a class called block. And I'm going to give it a constructor. And this constructor will receive the properties of this block.
+ And so each  block will have an index, a timestamp, some data, and the previous hash. I'm going to set this by default to empty. Now, these are pretty self-explanatory.  
+ The index is optional and it tells us where the block sits on the chain. The timestamp will tell us when the block was created.
+ And then we have data and this might include any type of data that you want to associate with this block.   
+ Now in case of a currency you might want to store the details of the transaction in here such as how much money was transferred and who was the sender and the receiver. 
+ And then the previoushash is a string that contains the hash of the block before this one.
+ Now this is  very important and it ensures the integrity of our blockchain. So I'm going to keep track of all these values.  
+ So I'm going to say this.index equals  index. This dot timestamp equals  timestamp. This dot data equals data. This dot previous hash equals previous hash. All right.
+ 
+ And now I'm also going to add another property to our class and that's going to be the hash property. 
+ Now this will contain the hash of our block. So we need a way to calculate it. So I'm going to set an empty for now 
+ 
+ and I'm going to create a new method and I'm  going to call this one calculatehash.  
+ And all that this function is going to do is calculate the hash function of this block.
+ So it's going to take the  properties of this block run through hash function and then return, and the hash and this will identify our block on the blockchain. 
+ Now I'm going to use Shaw 256 as a hash function, but this is not available um in JavaScript by default. So I actually need to import a library that can do this.
+ So I'm going to open up the terminal and I'm going to install uh cryptojs. I'm going to do that through npm. So I'm going to run npm install-save crypto-js.   
+ And this will download the library and it will put them in into the node  modules directory. So here we have cryptojs and here and here we have all the hash functions that it supports.
+ So I'm going to close up my terminal and now I can import the shot 256 function. So I'm going to say constant shaw 256 equals require cryptojs slashshaw 256. All right, there we go.   
+ So now we have imported the library and we can start using it. So this function right here, calculate hash, 
+ it should return a shot 256 hash of our index plus our previous hash plus the timestamp of our block plus.
+ And then I'm going to stringify the data object, the data object. So I'm going to stringify this.json JSON and I'm going to take the output of SHA256 and 
+ I'm going to cast it to a string because otherwise we get uh an object that this library returns. So now I can use this hash function. 
+ 
+ So I'm going to say that the hash equals this dot calculate hash.
+ And so when we create our block, we pass along these parameters and it will calculate the hash of our block. So that was our block class. Let's now create a new class for our blockchain. 
+ So class blockchain, I will give it a constructor as well. And the constructor is responsible for initializing our blockchain. So I'm going to create a property chain inside this class.
+ And that is going to be an array of blocks. Now the first block on a blockchain is called a genesis block. And this should be added manually. So I'm going to create a method to do this.   
+ So I'm going to call this method create genesis block and this is going to return a new block. So I'm going to say return new block and this is going to be of index zero.
+ We're   going to give it a date. This can be anything you want. Let's pick the 1 of January of this year. Uh we're going to give it some data. 
+ I'm just going to give it a string that says Genesis block and then the previous hash which is you know it kind of doesn't exist. This block is the first block so it cannot point to any previous blocks.
+ So this can be any random data. I'm just going to set it to zero. Okay. And then back in our constructor we're going to initialize our chain not as an empty array but as an array which contains our genesis block.   
+ All right. Now, I'm also going to add some other methods that could be useful in the future.
+ So, I'm going to add a get latest block method. And I'm also going to add an add block method that will receive a new block. Now, the get latest block method is really simple. It returns the latest block in the chain. 
+ So, we're going to return this.chain, and we're going to return the last element. That's length minus one. There we go. Okay.
+ Okay, so let's now implement our add block method. And this method is responsible for adding a new block onto the chain. But it needs to do some work before it just pushes it onto the array. 
+ 
+ The first thing that it needs to do is it needs to set the previous hash uh property of the new block and it needs to set this to the last block on our chain.
+ So we're going to get the latest block and then we're going to get the hash of that latest block. The next thing that we need to do is now that we've changed our block is that we need to recalculate its hash.
+ So every time we change any of these properties in our block, the hash function should be changed as well.
+ So I'm going to say new block.ash equals   new block dot calculate hash. All right, that should update it. And now I'm ready to push it into the chain. 
+ So I'm going to say this.chain.push push the new block. There we go. Now, in reality, you can't add a new block so easily because there are numerous checks in place, 
+ but for our little blockchain, it's more than enough, and it demonstrates how a blockchain actually works.
+ So, let's now test it. Uh, to test it, I'm going to create a instance of my blockchain. So, I'm going to create a variable safcoin, and I'm going to say it's a new blockchain. 
+ There we go. And I'm also going to add a few blocks. So I'm going to say savejee coin.add block. And then I'm going to create a new block.
+ And this is going to be block with index one posted on the 10th 2017. And as data object, I'm just going to pass amount equals 4 for example. And then I'm going to copy paste this line. 
+ I'm going to add another block. This block will have index two. It's posted two days later. Transfers maybe 10 coins, whatever.
+ 
+ This data can be anything that you want. Okay. So, let's now see what our blockchain looks like.  So, I'm going to console log our blockchain. 
+ I'm going to stringify it before we uh output it to the screen so that it's nice and readable. So, I'm going to stringify savcoin and I'm going to use four spaces to format it.
+ I'm going to save the file. I'm going to open up the terminal. And now we're going to run our main file. And there we go. This is what our blockchain looks like right now. 
+ So our blockchain is this object right here. It contains a property chain which is an array. And this array contains all of the blocks on our chain.
+ And you can see that each   block references the previous block. So let's take the latest one for example. This block references the previousblock. So here we we see that the previous hash is C37. 
+ And if we go to the previous block, this block has C37 as a hash. Great. So now that we know that that works, let's try and do something different.
+ Blockchains are great because once a block is added, it cannot be changed without invalidating the rest of the chain. 
+ But in this implementation, there is no way for me to verify the integrity of our blockchain. So let's add a new method to our blockchain. I'm going to close the terminal here.
+ 
+ Uh, and I'm going to call this method is chain valid. And this is going to return either true if the chain is valid and false if something is wrong. 
+ Now, in order to verify the integrity, we're going to loop over our entire chain. So, I'm going to say for i= 1. We're not going to start with block zero because block zero is the genesis block.
+ We're going to start with index one. So, we're going to set i to one. We're going to loop until the end of the chain. 
+ So until the length of the chain and we're going to increase i by one every time and then we're going to grab the current block and the previous block. 
+ So I'm going to say that the current block equals thischain i.
+ So I'm going to take the i position in the   chain. And then I'm also going to say that the previous block is the same but i minus one. So we're going one block back. 
+ And now we can actually check if these blocks um are properly linked together. Now the first thing that we're going to test is if the hash of the block is still valid.
+ So I'm going to check if the current block if   the hash of the current block is not   equal to current block.calulate hash. So here we're going to ask it to recalculate the hash. 
+ 
+ Well, if it's not equal then our chain is just invalid. Then something is wrong. the actual hash of the block doesn't match up with what uh its property says.
+ Now the next check that we need to do is we need to check if our block points to a correct previous block. So we need to check if the previous hash property is correctly set. 
+ So I'm going to check if our current block has a previous hash that is not equal to the hash of our previous block. 
+ And if that's the case, then again, we know that something is wrong because our current block does not point to the   previous block.
+ It points to something else that might not exist. Now, if it loops through all of our blocks and it hasn't returned false, then we obviously have to return true because then our chain is perfectly valid. 
+ So, that's it for the verify function. Now, we can actually verify the integrity of our blockchain. So, let's do that.
+ Right now, I'm going to   scroll down. So, I'm going to leave   these two two lines in, and I'm just going to check if our blockchain is valid. So, I'm going to comment Whoops.   
+ So, I'm going to comment this line out and I'm just going to say console log is  blockchain valid question mark. And then we're going to add savcoin is chain valid.
+ So, let's run that right now. And it says yes, our blockchain is valid. And that's because we haven't done anything to tamper with our blockchain. Now, let's try and tamper with our blockchain. 
+ So, I'm going to leave this line in again. And now, I'm going to try and change block two.
+ So, I'm going to say that savcoin.chain. I'm going to take the first block here and I'm going to overwrite its data. I'm going to say that instead of transferring, you know, just four coins,   
+ I'm going to say that we transferred 100 coins. I want to make myself rich here. So, after I've done that, I'm going to copy and paste this line here, and I'm going to recheck if our blockchain is valid. 
+ 
+ So, I'm going to run this again.
+ And you can see the first time our blockchain is valid. And then we tamper with one of the blocks, and then all of a sudden it says, "Hey, you know, something is not right here. 
+ This is not valid anymore." Okay. Well, you might think there's another way I can tamper   with this here.
+ I've changed the data of   the block, but I didn't recomputate the   hash. So, you might say,
+ well, I'm going to be clever here and I'm going to take that same block here and I'm going to recalculate its hash. So, I'm going to say savvcoin.chain one calculate hash. 
+ Okay. So, right now, if I do this, I've tampered with the block.
+ I've recalculated its hash and so that will not work. Well, let's run it again. And sure enough, no, it doesn't work because right now we've tampered with one of the blocks, 
+ but the relationship with its previous block is now been broken. 
+ So again, the blockchain is meant to add blocks to it, but to never delete a block or to never change a block again.
+ Now, of course, if you detect that a new block broke your chain or if something is wrong with your chain, 
+ then you should have a mechanism that rolls back the changes and then puts your blockchain back in a correct state, but that is beyond the scope of this video. 
+ It also lacks many features such as proof of work or a peer-to-peer network to communicate with other miners, and it even doesn't check if you had enough funds to make a transaction.
+ So, there's lots of limitations to my little blockchain right here, but it perfectly demonstrates how a blockchain works behind the scenes. So, that was it for this video. 
+ I hope you liked it, and if you did, leave a thumbs up on this video or subscribe to my channel. Thank you very much for watching, and I'll see you in the next video.
