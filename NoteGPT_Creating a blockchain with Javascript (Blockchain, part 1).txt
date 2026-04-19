@@ -1,5 +1,6 @@
 
-Hi everyone, my name is Kavier and in this video we're going to write a very tiny blockchain in JavaScript. Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. We'll call this blockchain Savcoin and let's get started.   
+Hi everyone, my name is Kavier and in this video we're going to write a very tiny blockchain in JavaScript. 
+Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. We'll call this blockchain Savcoin and let's get started.   
 [Music]   [Applause]   Okay, so here I've opened up an empty directory in Visual Studio Code.
  And  let's start by creating a new JavaScript file uh to store all of our code. I'm going to call this main.js. 
  And I'm going to start by defining what a block on our blockchain will look like. 
@@ -34,15 +35,20 @@ Hi everyone, my name is Kavier and in this video we're going to write a very tin
  And that is going to be an array of blocks. Now the first block on a blockchain is called a genesis block. And this should be added manually. So I'm going to create a method to do this.   
  So I'm going to call this method create genesis block and this is going to return a new block. So I'm going to say return new block and this is going to be of index zero.
  We're   going to give it a date. This can be anything you want. Let's pick the 1 of January of this year. Uh we're going to give it some data. 
- I'm just going to give it a string that says Genesis block and then the previous hash which is you know it kind of doesn't exist. This block is the first block so it cannot point to any previous blocks.
- So this can be any random data. I'm just going to set it to zero. Okay. And then back in our constructor we're going to initialize our chain not as an empty array but as an array which contains our genesis block.   
+ I'm just going to give it a string that says Genesis block and then the previous hash which is you know it kind of doesn't exist. 
+ This block is the first block so it cannot point to any previous blocks.
+ So this can be any random data. I'm just going to set it to zero. Okay. 
+ And then back in our constructor we're going to initialize our chain not as an empty array but as an array which contains our genesis block.   
  All right. Now, I'm also going to add some other methods that could be useful in the future.
- So, I'm going to add a get latest block method. And I'm also going to add an add block method that will receive a new block. Now, the get latest block method is really simple. It returns the latest block in the chain. 
+ So, I'm going to add a get latest block method. And I'm also going to add an add block method that will receive a new block. Now, the get latest block method is really simple. 
+ It returns the latest block in the chain. 
  So, we're going to return this.chain, and we're going to return the last element. That's length minus one. There we go. Okay.
- Okay, so let's now implement our add block method. And this method is responsible for adding a new block onto the chain. But it needs to do some work before it just pushes it onto the array. 
+ Okay, so let's now implement our add block method. And this method is responsible for adding a new block onto the chain. 
+ But it needs to do some work before it just pushes it onto the array. 
  
  The first thing that it needs to do is it needs to set the previous hash uh property of the new block and it needs to set this to the last block on our chain.
- So we're going to get the latest block and then we're going to get the hash of that latest block. The next thing that we need to do is now that we've changed our block is that we need to recalculate its hash.
+ So we're going to get the latest block and then we're going to get the hash of that latest block. 
+ The next thing that we need to do is now that we've changed our block is that we need to recalculate its hash.
  So every time we change any of these properties in our block, the hash function should be changed as well.
  So I'm going to say new block.ash equals   new block dot calculate hash. All right, that should update it. And now I'm ready to push it into the chain. 
  So I'm going to say this.chain.push push the new block. There we go. Now, in reality, you can't add a new block so easily because there are numerous checks in place, 
