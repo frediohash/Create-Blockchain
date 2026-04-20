@@ -2,7 +2,7 @@
 Hi everyone, my name is Kavier and in this video we're going to write a very tiny blockchain in JavaScript. 
 Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. We'll call this blockchain Savcoin and let's get started.   
 [Music]   [Applause]   Okay, so here I've opened up an empty directory in Visual Studio Code.
- And  let's start by creating a new JavaScript file uh to store all of our code. I'm going to call this main.js. 
+ And  let's start by creating a new JavaScript file, uh to store all of our code. I'm going to call this main.js. 
  And I'm going to start by defining what a block on our blockchain will look like. 
  
  So I'm going to create a class called block. And I'm going to give it a constructor. And this constructor will receive the properties of this block.
