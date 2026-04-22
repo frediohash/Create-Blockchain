@@ -22,7 +22,7 @@ Now it won't be anything too fancy but it will be just enough so you can underst
  So it's going to take the  properties of this block run through hash function and then return, and the hash and this will identify our block on the blockchain. 
  Now I'm going to use Shaw 256 as a hash function, but this is not available um in JavaScript by default. So I actually need to import a library that can do this.
  So I'm going to open up the terminal and I'm going to install uh cryptojs. I'm going to do that through npm. So I'm going to run npm install-save crypto-js.   
- And this will download the library and it will put them in into the node  modules directory. So here we have cryptojs and here and here we have all the hash functions that it supports.
+ And this will download the library and it will put them in into the node modules directory. So here we have cryptojs and here and here we have all the hash functions that it supports.
  So I'm going to close up my terminal and now I can import the shot 256 function. So I'm going to say constant shaw 256 equals require cryptojs slashshaw 256. All right, there we go.   
  So now we have imported the library and we can start using it. So this function right here, calculate hash, 
  it should return a shot 256 hash of our index plus our previous hash plus the timestamp of our block plus.
