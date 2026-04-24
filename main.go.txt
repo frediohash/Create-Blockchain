@@ -1,5 +1,6 @@
 Hi everyone, my name is Fredio and in this video we're going to write a very tiny blockchain in Golang. 
-Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. We'll call this blockchain Savcoin and let's get started.  
+Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. 
+We'll call this blockchain Savecoin and let's get started.  
 And let's start by creating a new Golang file, uh to store all of our code. I'm going to call this main.go. 
 And I'm going to start by defining what a block on our blockchain will look like. 
 
@@ -16,27 +17,35 @@ import (
  So I'm going to create a struct called block. And this struct will receive the properties of this block.
 // Block structasdrtxcQ1q`		
 type Block struct {
-	Index        int  And so each  block will have an index, a timestamp, some data, and the previous hash. and hash
+	Index        int  //And so each  block will have an index, a timestamp, some data, and the previous hash. and hash
 	Timestamp    string
 	Data         interface{}
 	PreviousHash string
 	Hash         string
 }
 Now, these are pretty self-explanatory. 
-The index is optional and it tells us where the block sits on the chain. The timestamp will tell us when the block was created.
-And then we have data and this might include any type of data that you want to associate with this block. Now in case of a currency you might want to store the details of the transaction in here such as how much money was transferred and who was the sender and the receiver. 
+The index is optional and it tells us where the block sits on the chain. 
+The timestamp will tell us when the block was created.
+And then we have data and this might include any type of data that you want to associate with this block. 
+Now in case of a currency you might want to store the details of the transaction 
+in here such as how much money was transferred and who was the sender and the receiver. 
 And then the previoushash is a string that contains the hash of the block before this one.
-And the hash representing the unique fingerprint of the block
+And the hash representing the unique fingerprint of the block.
 
  Now this is  very important and it ensures the integrity of our blockchain. So I'm going to keep track of all these values.  
 // Calculate hash
 func (b *Block) CalculateHash() string { and I'm going to create a new method and I'm going to call this one calculatehash.
  So I'm going to say
-	dataBytes, _ := json.Marshal(b.Data) // Converts block data into JSON format to ensure consistent structure before hashing.
-	record := fmt.Sprintf("%d%s%s%s", b.Index, b.Timestamp, b.PreviousHash, string(dataBytes)) // These value will combines index, timestamp, previous hash, and data into one single string.
-	hash := sha256.Sum256([]byte(record)) //Now I'm going to use Shaw 256 as a hash function, but this is not available um in Golang by default. 
-	So I actually need to import a library that can do this. the hash this will identify our block on the blockchain. Generates a SHA-256 hash from the combined string.
-	return hex.EncodeToString(hash[:]) //This line converts the hash (which is in byte format) into a readable hexadecimal string.
+	dataBytes, _ := json.Marshal(b.Data) 
+	// Converts block data into JSON format to ensure consistent structure before hashing.
+	record := fmt.Sprintf("%d%s%s%s", b.Index, b.Timestamp, b.PreviousHash, string(dataBytes)) 
+	// These value will combines index, timestamp, previous hash, and data into one single string.
+	hash := sha256.Sum256([]byte(record)) 
+	//Now I'm going to use Shaw 256 as a hash function, but this is not available um in Golang by default. 
+	So I actually need to import a library that can do this. the hash this will identify our block on the blockchain. 
+	Generates a SHA-256 hash from the combined string.
+	return hex.EncodeToString(hash[:]) 
+	//This line converts the hash (which is in byte format) into a readable hexadecimal string.
 }
 All right, there we go.
 And all that this function is going to do is calculate the hash function of this block.
@@ -50,15 +59,19 @@ type Blockchain struct {
 
 This function is responsible for creating and returning the first block in our blockchain, known as the genesis block
 // Create genesis block
-func (bc *Blockchain) CreateGenesisBlock() Block { // it's method of the Blockchain struct (bc *Blockchain) and returns a Block
+func (bc *Blockchain) CreateGenesisBlock() Block { 
+	// it's method of the Blockchain struct (bc *Blockchain) and returns a Block
 	block := Block{ This line initializes a new Block struct instance called block
 		Index:        0, // This sets the block index to 0, indicating that this is the first block in the blockchain.
-		Timestamp:    "01/05/2026", // This assigns a timestamp to the block, representing when the block is created. (In real-world scenarios, this is usually generated dynamically.)
-		Data:         "Genesis Block", // This sets the data for the block. Here, it’s a fixed string "Genesis Block" to identify this as the first block
+		Timestamp:    "01/05/2026", // This assigns a timestamp to the block, representing when the block is created. 
+		(In real-world scenarios, this is usually generated dynamically.)
+		Data:         "Genesis Block", // This sets the data for the block. 
+		Here, it’s a fixed string "Genesis Block" to identify this as the first block
 		PreviousHash: "0", // This sets the previous hash to "0" because the genesis block does not have any previous block.
 	}
-	block.Hash = block.CalculateHash() This line calculates the hash of the block using its contents (index, timestamp, data, and previous hash),
-    and assigns the result to the Hash field of the block.
+	block.Hash = block.CalculateHash() 
+	//This line calculates the hash of the block using its contents (index, timestamp, data, and previous hash), 
+	and assigns the result to the Hash field of the block.
 	return block
 }
 
@@ -70,24 +83,35 @@ This function is responsible for getting the latest block in the blockchain.
 Since the blockchain is stored as a slice, we simply take the last element using length minus one
 
 // Add block
-func (bc *Blockchain) AddBlock(newBlock Block) { //Defines a method of the Blockchain struct that takes a new block and adds it to the chain.
-	newBlock.PreviousHash = bc.GetLatestBlock().Hash //Sets the PreviousHash of the new block to the hash of the latest block in the blockchain.This creates the link between blocks
-	newBlock.Hash = newBlock.CalculateHash() //Calculates the hash of the new block using its updated data (including the previous hash).
-	bc.Chain = append(bc.Chain, newBlock) //Adds the new block to the end of the blockchain slice.
+func (bc *Blockchain) AddBlock(newBlock Block) { 
+//Defines a method of the Blockchain struct that takes a new block and adds it to the chain.
+	newBlock.PreviousHash = bc.GetLatestBlock().Hash 
+	//Sets the PreviousHash of the new block to the hash of the latest block in the blockchain. This creates the link between blocks
+	newBlock.Hash = newBlock.CalculateHash() 
+	//Calculates the hash of the new block using its updated data (including the previous hash).
+	bc.Chain = append(bc.Chain, newBlock) 
+	//Adds the new block to the end of the blockchain slice.
 }
 
 // Validate chain
-func (bc *Blockchain) IsChainValid() bool { //Defines a method of the Blockchain struct that returns a boolean (true or false) indicating whether the blockchain is valid
-	for i := 1; i < len(bc.Chain); i++ { // Loops through the blockchain starting from index 1 (skipping the genesis block), because the first block has no previous block to compare with
+func (bc *Blockchain) IsChainValid() bool { 
+//Defines a method of the Blockchain struct that returns a boolean (true or false) indicating whether the blockchain is valid
+	for i := 1; i < len(bc.Chain); i++ { 
+//Loops through the blockchain starting from index 1 (skipping the genesis block), 
+because the first block has no previous block to compare with
 		current := bc.Chain[i] // Stores the current block being checked
 		previous := bc.Chain[i-1] // Stores the previous block in the chain for comparison.
 
-		if current.Hash != current.CalculateHash() { // Checks if the stored hash of the current block matches a newly calculated hash based on its contents.
-			return false //If the hashes do not match, it means the block data has been tampered with, so the blockchain is invalid
+		if current.Hash != current.CalculateHash() { 
+		// Checks if the stored hash of the current block matches a newly calculated hash based on its contents.
+			return false 
+			//If the hashes do not match, it means the block data has been tampered with, so the blockchain is invalid
 		}
 
-		if current.PreviousHash != previous.Hash { // Checks if the current block correctly references the hash of the previous block.
-			return false // If the previous hash does not match, the chain is broken and invalid.
+		if current.PreviousHash != previous.Hash { 
+		// Checks if the current block correctly references the hash of the previous block.
+			return false 
+		// If the previous hash does not match, the chain is broken and invalid.
 		}
 	}
 	return true // If all blocks pass validation, the blockchain is valid
@@ -96,11 +120,14 @@ func (bc *Blockchain) IsChainValid() bool { //Defines a method of the Blockchain
 func main() {
 	// Initialize blockchain
 	fredio := Blockchain{} //Creates a new instance of the Blockchain struct named fredio
-	fredio.Chain = append(fredio.Chain, fredio.CreateGenesisBlock()) //Initializes the blockchain by creating and adding the genesis block as the first block in the chain
+	fredio.Chain = append(fredio.Chain, fredio.CreateGenesisBlock()) 
+	//Initializes the blockchain by creating and adding the genesis block as the first block in the chain
 
 	// Add blocks
-	fredio.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}}) //Adds a new block with index 1 and transaction data (amount: 1000) to the blockchain.
-	fredio.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}}) //Adds another block with index 2 and transaction data (amount: 2000).
+	fredio.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}}) 
+	//Adds a new block with index 1 and transaction data (amount: 1000) to the blockchain.
+	fredio.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}}) 
+	//Adds another block with index 2 and transaction data (amount: 2000).
 
 	// Print blockchain
 	jsonData, _ := json.MarshalIndent(fredio, "", "  ")Converts the entire blockchain into a formatted JSON string for better readability.
@@ -110,8 +137,10 @@ func main() {
 	fmt.Println("Status Block", fredio.IsChainValid()) //Checks whether the blockchain is valid and prints the result.
 
 	// Tamper data
-	fredio.Chain[1].Data = map[string]int{"amount": 100} //Manually modifies the data of the second block (tampering), changing the amount from 1000 to 100.
+	fredio.Chain[1].Data = map[string]int{"amount": 100} 
+	//Manually modifies the data of the second block (tampering), changing the amount from 1000 to 100.
 
 	// Validate again
-	fmt.Println("Status Block", fredio.IsChainValid()) //Validates the blockchain again after tampering. This should return false, showing that the blockchain integrity has been broken
+	fmt.Println("Status Block", fredio.IsChainValid()) 
+	//Validates the blockchain again after tampering. This should return false, showing that the blockchain integrity has been broken
 }
