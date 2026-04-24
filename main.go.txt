@@ -77,41 +77,41 @@ func (bc *Blockchain) AddBlock(newBlock Block) { //Defines a method of the Block
 }
 
 // Validate chain
-func (bc *Blockchain) IsChainValid() bool {
-	for i := 1; i < len(bc.Chain); i++ {
-		current := bc.Chain[i]
-		previous := bc.Chain[i-1]
+func (bc *Blockchain) IsChainValid() bool { //Defines a method of the Blockchain struct that returns a boolean (true or false) indicating whether the blockchain is valid
+	for i := 1; i < len(bc.Chain); i++ { // Loops through the blockchain starting from index 1 (skipping the genesis block), because the first block has no previous block to compare with
+		current := bc.Chain[i] // Stores the current block being checked
+		previous := bc.Chain[i-1] // Stores the previous block in the chain for comparison.
 
-		if current.Hash != current.CalculateHash() {
-			return false
+		if current.Hash != current.CalculateHash() { // Checks if the stored hash of the current block matches a newly calculated hash based on its contents.
+			return false //If the hashes do not match, it means the block data has been tampered with, so the blockchain is invalid
 		}
 
-		if current.PreviousHash != previous.Hash {
-			return false
+		if current.PreviousHash != previous.Hash { // Checks if the current block correctly references the hash of the previous block.
+			return false // If the previous hash does not match, the chain is broken and invalid.
 		}
 	}
-	return true
+	return true // If all blocks pass validation, the blockchain is valid
 }
 
 func main() {
 	// Initialize blockchain
-	fredio := Blockchain{}
-	fredio.Chain = append(fredio.Chain, fredio.CreateGenesisBlock())
+	fredio := Blockchain{} //Creates a new instance of the Blockchain struct named fredio
+	fredio.Chain = append(fredio.Chain, fredio.CreateGenesisBlock()) //Initializes the blockchain by creating and adding the genesis block as the first block in the chain
 
 	// Add blocks
-	fredio.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}})
-	fredio.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}})
+	fredio.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}}) //Adds a new block with index 1 and transaction data (amount: 1000) to the blockchain.
+	fredio.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}}) //Adds another block with index 2 and transaction data (amount: 2000).
 
 	// Print blockchain
-	jsonData, _ := json.MarshalIndent(fredio, "", "  ")
-	fmt.Println(string(jsonData))
+	jsonData, _ := json.MarshalIndent(fredio, "", "  ")Converts the entire blockchain into a formatted JSON string for better readability.
+	fmt.Println(string(jsonData)) //Prints the blockchain data in JSON format to the console.
 
 	// Validate
-	fmt.Println("Status Block", fredio.IsChainValid())
+	fmt.Println("Status Block", fredio.IsChainValid()) //Checks whether the blockchain is valid and prints the result.
 
 	// Tamper data
-	fredio.Chain[1].Data = map[string]int{"amount": 100}
+	fredio.Chain[1].Data = map[string]int{"amount": 100} //Manually modifies the data of the second block (tampering), changing the amount from 1000 to 100.
 
 	// Validate again
-	fmt.Println("Status Block", fredio.IsChainValid())
+	fmt.Println("Status Block", fredio.IsChainValid()) //Validates the blockchain again after tampering. This should return false, showing that the blockchain integrity has been broken
 }
