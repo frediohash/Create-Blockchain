@@ -65,8 +65,9 @@ Now it won't be anything too fancy but it will be just enough so you can underst
  And you can see that each   block references the previous block. So let's take the latest one for example. This block references the previousblock. So here we we see that the previous hash is C37. 
  And if we go to the previous block, this block has C37 as a hash. Great. So now that we know that that works, let's try and do something different.
  Blockchains are great because once a block is added, it cannot be changed without invalidating the rest of the chain. 
- But in this implementation, there is no way for me to verify the integrity of our blockchain. So let's add a new method to our blockchain. I'm going to close the terminal here.
  
+ 
+ But in this implementation, there is no way for me to verify the integrity of our blockchain. So let's add a new method to our blockchain. I'm going to close the terminal here.
  Uh, and I'm going to call this method is chain valid. And this is going to return either true if the chain is valid and false if something is wrong. 
  Now, in order to verify the integrity, we're going to loop over our entire chain. So, I'm going to say for i= 1. We're not going to start with block zero because block zero is the genesis block.
  We're going to start with index one. So, we're going to set i to one. We're going to loop until the end of the chain. 
@@ -74,7 +75,7 @@ Now it won't be anything too fancy but it will be just enough so you can underst
  So I'm going to say that the current block equals thischain i.
  So I'm going to take the i position in the   chain. And then I'm also going to say that the previous block is the same but i minus one. So we're going one block back. 
  And now we can actually check if these blocks um are properly linked together. Now the first thing that we're going to test is if the hash of the block is still valid.
- So I'm going to check if the current block if   the hash of the current block is not   equal to current block.calulate hash. So here we're going to ask it to recalculate the hash. 
+ So I'm going to check if the current block if the hash of the current block is not   equal to current block.calulate hash. So here we're going to ask it to recalculate the hash. 
  
  Well, if it's not equal then our chain is just invalid. Then something is wrong. the actual hash of the block doesn't match up with what uh its property says.
  Now the next check that we need to do is we need to check if our block points to a correct previous block. So we need to check if the previous hash property is correctly set. 
@@ -91,7 +92,7 @@ Now it won't be anything too fancy but it will be just enough so you can underst
  
  So, I'm going to run this again.
  And you can see the first time our blockchain is valid. And then we tamper with one of the blocks, and then all of a sudden it says, "Hey, you know, something is not right here. 
- This is not valid anymore." Okay. Well, you might think there's another way I can tamper   with this here.
+ This is not valid anymore." Okay. Well, you might think there's another way I can tamper  with this here.
  I've changed the data of   the block, but I didn't recomputate the   hash. So, you might say,
  well, I'm going to be clever here and I'm going to take that same block here and I'm going to recalculate its hash. So, I'm going to say savvcoin.chain one calculate hash. 
  Okay. So, right now, if I do this, I've tampered with the block.

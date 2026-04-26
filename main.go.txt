@@ -93,7 +93,10 @@ func (bc *Blockchain) AddBlock(newBlock Block) {
 	//Adds the new block to the end of the blockchain slice.
 }
 
-// Validate chain
+//  So, that's it for the verify function. Now, we can actually verify the integrity of our blockchain. So, let's do that.
+ Right now, I'm going to scroll down. So, I'm going to leave these two two lines in, 
+ and I'm just going to check if our blockchain is valid. So, I'm going to comment.   
+ So, I'm going to comment this line out and I'm just going to say console log is blockchain valid question mark. And then we're going to add savcoin is chain valid.
 func (bc *Blockchain) IsChainValid() bool { 
 //Defines a method of the Blockchain struct that returns a boolean (true or false) indicating whether the blockchain is valid
 	for i := 1; i < len(bc.Chain); i++ { 
