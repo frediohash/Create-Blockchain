@@ -1,4 +1,4 @@
-Hi everyone, my name is Fredio and in this video we're going to write a very tiny blockchain in Golang. 
+Hi everyone, my name is fredio and in this video we're going to write a very tiny blockchain in Golang. 
 Now it won't be anything too fancy but it will be just enough so you can understand how a blockchain actually works. 
 We'll call this blockchain Savecoin and let's get started.  
 And let's start by creating a new Golang file, uh to store all of our code. I'm going to call this main.go. 
@@ -15,7 +15,7 @@ import (
 )
 
  So I'm going to create a struct called block. And this struct will receive the properties of this block.
-// Block structasdrtxcQ1q`		
+// Block struct		
 type Block struct {
 	Index        int  //And so each  block will have an index, a timestamp, some data, and the previous hash. and hash
 	Timestamp    string
@@ -122,28 +122,28 @@ because the first block has no previous block to compare with
 
 func main() {
 	// Initialize blockchain
-	fredio := Blockchain{} //Creates a new instance of the Blockchain struct named fredio
-	fredio.Chain = append(fredio.Chain, fredio.CreateGenesisBlock()) 
+	savecoin := Blockchain{} //Creates a new instance of the Blockchain struct named savecoin
+	savecoin.Chain = append(savecoin.Chain, savecoin.CreateGenesisBlock()) 
 	//Initializes the blockchain by creating and adding the genesis block as the first block in the chain
 
 	// Add blocks
-	fredio.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}}) 
+	savecoin.AddBlock(Block{Index: 1, Timestamp: "02/06/2021", Data: map[string]int{"amount": 1000}}) 
 	//Adds a new block with index 1 and transaction data (amount: 1000) to the blockchain.
-	fredio.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}}) 
+	savecoin.AddBlock(Block{Index: 2, Timestamp: "03/06/2021", Data: map[string]int{"amount": 2000}}) 
 	//Adds another block with index 2 and transaction data (amount: 2000).
 
 	// Print blockchain
-	jsonData, _ := json.MarshalIndent(fredio, "", "  ")Converts the entire blockchain into a formatted JSON string for better readability.
+	jsonData, _ := json.MarshalIndent(savecoin, "", "  ")Converts the entire blockchain into a formatted JSON string for better readability.
 	fmt.Println(string(jsonData)) //Prints the blockchain data in JSON format to the console.
 
 	// Validate
-	fmt.Println("Status Block", fredio.IsChainValid()) //Checks whether the blockchain is valid and prints the result.
+	fmt.Println("Status Block", savecoin.IsChainValid()) //Checks whether the blockchain is valid and prints the result.
 
 	// Tamper data
-	fredio.Chain[1].Data = map[string]int{"amount": 100} 
+	savecoin.Chain[1].Data = map[string]int{"amount": 100} 
 	//Manually modifies the data of the second block (tampering), changing the amount from 1000 to 100.
 
 	// Validate again
-	fmt.Println("Status Block", fredio.IsChainValid()) 
+	fmt.Println("Status Block", savecoin.IsChainValid()) 
 	//Validates the blockchain again after tampering. This should return false, showing that the blockchain integrity has been broken
 }
