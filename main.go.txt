@@ -30,38 +30,41 @@ And then we have data and this might include any type of data that you want to a
 Now in case of a currency you might want to store the details of the transaction 
 in here such as how much money was transferred and who was the sender and the receiver. 
 And then the previoushash is a string that contains the hash of the block before this one.
-And the hash representing the unique fingerprint of the block.
+And the hash it will represent the unique fingerprint of the block.
 
- Now this is  very important and it ensures the integrity of our blockchain. So I'm going to keep track of all these values.  
+ Now this is very important to ensures the integrity of our blockchain. So I'm going to keep track of all these values.  
 // Calculate hash
-func (b *Block) CalculateHash() string { and I'm going to create a new method and I'm going to call this one calculatehash.
- So I'm going to say
+// and I'm going to create a new method and I'm going to call this one calculatehash.
+func (b *Block) CalculateHash() string { 
+	So I'm going to say
 	dataBytes, _ := json.Marshal(b.Data) 
-	// Converts block data into JSON format to ensure consistent structure before hashing.
+	// the dataBytes converts block data into JSON format to ensure consistent structure before hashing.
 	record := fmt.Sprintf("%d%s%s%s", b.Index, b.Timestamp, b.PreviousHash, string(dataBytes)) 
 	// These value will combines index, timestamp, previous hash, and data into one single string.
 	hash := sha256.Sum256([]byte(record)) 
-	//Now I'm going to use Shaw 256 as a hash function, but this is not available um in Golang by default. 
-	So I actually need to import a library that can do this. the hash this will identify our block on the blockchain. 
-	Generates a SHA-256 hash from the combined string.
+	//the hash this will identify our block on the blockchain.
+	//Now I'm going to use Shaw 256 as a hash function but this is not available in Golang by default, 
+	and sum256 to generates a SHA-256 hash from the combined string. 
 	return hex.EncodeToString(hash[:]) 
-	//This line converts the hash (which is in byte format) into a readable hexadecimal string.
+	//This hex converts the hash (which is in byte format) into a readable hexadecimal string.
 }
 All right, there we go.
-And all that this function is going to do is calculate the hash function of this block.
+And all that this CalculateHash function is going to do is calculate the hash function of this block.
 
 Let's now create a new struct for our blockchain.
 This struct defines our blockchain data structure
 // Blockchain struct
 type Blockchain struct {
-	Chain []Block //It contains a field called Chain, which is a slice (dynamic array) of Block.
+    // It contains a field called Chain, which is a slice dynamic array of Block.
+	Chain []Block 
 }
 
+Let's create a new method
 This function is responsible for creating and returning the first block in our blockchain, known as the genesis block
 // Create genesis block
 func (bc *Blockchain) CreateGenesisBlock() Block { 
-	// it's method of the Blockchain struct (bc *Blockchain) and returns a Block
-	block := Block{ This line initializes a new Block struct instance called block
+// This line initializes a new Block struct instance called block
+	block := Block{ 
 		Index:        0, // This sets the block index to 0, indicating that this is the first block in the blockchain.
 		Timestamp:    "01/05/2026", // This assigns a timestamp to the block, representing when the block is created. 
 		(In real-world scenarios, this is usually generated dynamically.)
